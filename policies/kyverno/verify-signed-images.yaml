@@ -1,0 +1,36 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-signed-images
+  annotations:
+    policies.kyverno.io/title: Verify signed lab images
+    policies.kyverno.io/severity: high
+spec:
+  background: false
+  webhookTimeoutSeconds: 30
+  rules:
+    - name: verify-signature
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - supply-chain
+      verifyImages:
+        - failureAction: Enforce
+          imageReferences:
+            - "65.109.75.15:30500/*"
+          mutateDigest: true
+          required: true
+          attestors:
+            - count: 1
+              entries:
+                - keys:
+                    publicKeys: |-
+                      -----BEGIN PUBLIC KEY-----
+                      MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJs01RW5PWl1FHXfptZ/JAwztTSN3
+                      D7nYG0YqcdKyzWBCHJQws/+xanUCsrkv3pF+ug8s18L5O7/M/ghA60LzPQ==
+                      -----END PUBLIC KEY-----
+                    rekor:
+                      ignoreTlog: true

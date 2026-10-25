@@ -25,3 +25,21 @@ metadata:
   labels:
     pod-security.kubernetes.io/enforce: privileged
     assignment.example/purpose: scanner-fixture
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: image-registry
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    assignment.example/purpose: signing-registry
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: supply-chain
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    assignment.example/purpose: image-signing

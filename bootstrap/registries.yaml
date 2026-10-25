@@ -1,0 +1,11 @@
+# Host containerd config for the lab registry. Copy to
+# /etc/rancher/rke2/registries.yaml on any node that pulls signed images.
+# The registry is HTTP and is not in the public ufw allow list.
+mirrors:
+  "65.109.75.15:30500":
+    endpoint:
+      - "http://65.109.75.15:30500"
+configs:
+  "65.109.75.15:30500":
+    tls:
+      insecure_skip_verify: true

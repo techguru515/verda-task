@@ -46,6 +46,12 @@ The team-b web pod listens on 8080 in cleartext and on 8443 with a server certif
 
 `curl https://web.team-b.svc.cluster.local:8443/` with the client certificate returned HTTP 200. The same URL with only the CA returned HTTP 400. Plain HTTP on 8080 still returns 200, so the earlier network-policy proof is unchanged. Cilium mutual authentication is not enabled. Cilium GHSA-33qq-jq9c-6gcc is a certificate-substitution bypass in that beta feature, and 1.20.2 is outside the affected ranges.
 
+## Image signing
+
+`cosign sign --tlog-upload=false --allow-http-registry` signed `nginx-unprivileged@sha256:0c79d56aee561a1d81c63f00eee5fb5fe29279560cdc55e91425133104c7fbe6` in the registry on port 30500. Kyverno policy `verify-signed-images` matches that registry in namespace `supply-chain`.
+
+`pod/signed-web` was created and became Ready. `unsigned-curl`, the same curl image with no signature, was denied by `mutate.kyverno.svc-fail`: `no signatures found`.
+
 ## Host firewall
 
 On the control node, 6443, 9345, 9418, and 8088 listen on all interfaces. ufw allows SSH only from `31.13.241.15`, plus the three node addresses and the pod and service CIDRs. 6443 is not an allow rule for the internet.

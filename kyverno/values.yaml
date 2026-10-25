@@ -1,5 +1,7 @@
 admissionController:
   replicas: 1
+  # The live admission controller also runs --allowInsecureRegistry=true so it
+  # can read cosign signatures from the HTTP lab registry on port 30500.
 backgroundController:
   replicas: 1
 cleanupController:

@@ -39,7 +39,7 @@ Versions are in `VERSIONS`. Command transcripts are in `evidence/`.
 
 ## Still open
 
-Image signing with cosign is not implemented. team-b web does require a client certificate on port 8443; Cilium's own mutual-auth feature is left off because GHSA-33qq-jq9c-6gcc is a bypass in that beta. The control plane is a single node. `ClusterPolicy` is deprecated in Kyverno 1.19 and still enforces. The GitOps remote is a git daemon on the control node, because this workspace has no GitHub remote. Scanning reports vulnerabilities and does not block them. The image job in CI fails `curlimages/curl:8.16.0` on CVE-2026-31789; triage is in `docs/cve-triage.md`. Policy rollout is described in `docs/policy-lifecycle.md`.
+team-b web requires a client certificate on port 8443. Cilium's own mutual-auth feature is left off because GHSA-33qq-jq9c-6gcc is a bypass in that beta. Images pulled from the lab registry on port 30500 must be signed with the cosign key in `/root/cosign`; the private key is not in git. The public key is in `policies/kyverno/verify-signed-images.yaml`. The control plane is a single node. `ClusterPolicy` is deprecated in Kyverno 1.19 and still enforces. The GitOps remote is a git daemon on the control node, because this workspace has no GitHub remote. Scanning reports vulnerabilities and does not block them. The image job in CI fails `curlimages/curl:8.16.0` on CVE-2026-31789; triage is in `docs/cve-triage.md`. Policy rollout is described in `docs/policy-lifecycle.md`.
 
 ## Cost
 
