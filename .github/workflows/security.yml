@@ -18,17 +18,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          curl -fsSL \
-            -H "Accept: application/octet-stream" \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -o kyverno.tar.gz \
-            https://api.github.com/repos/kyverno/kyverno/releases/assets/660820927
-          if ! tar -tzf kyverno.tar.gz >/dev/null; then
-            kind=$(file -b kyverno.tar.gz || true)
-            size=$(wc -c < kyverno.tar.gz || true)
-            echo "::error::Kyverno archive is not a tarball (size=${size}, kind=${kind})"
+          err=$(curl -q -fsSL -H "Accept: application/octet-stream" -H "Authorization: Bearer ${GH_TOKEN}" -o kyverno.tar.gz https://api.github.com/repos/kyverno/kyverno/releases/assets/660820927 2>&1) || {
+            echo "::error::$(printf '%s' "$err" | tr '\n' ' ')"
             exit 1
-          fi
+          }
           tar -xzf kyverno.tar.gz
           sudo install -m 0755 kyverno /usr/local/bin/kyverno
       - name: Test admission policies
