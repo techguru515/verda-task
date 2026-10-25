@@ -6,7 +6,7 @@ RKE2 v1.36.5+rke2r1 runs on all three. `k8s-control` is control-plane and etcd. 
 
 ufw default-deny incoming. SSH is limited to the admin address. Node-to-node traffic and the pod and service CIDRs are allowed so the API, etcd, and VXLAN work. Kubernetes ports listen on the host and are absent from the public allow list.
 
-Argo CD (one replica, Redis HA off) syncs six Applications from `git://65.109.75.15/assignment.git`: namespaces, network policies, Kyverno policies, RBAC, team-a, team-b. The git daemon listens on 9418 on the control node. Pods can reach it because ufw allows the pod CIDR. The internet cannot. An earlier dumb HTTP server on 8088 failed Argo with `unexpected EOF` and is still running; Argo does not use it.
+Argo CD (one replica, Redis HA off) syncs six Applications from https://github.com/techguru515/verda-task.git: namespaces, network policies, Kyverno policies, RBAC, team-a, team-b. A git daemon still listens on 9418 on the control node, and an earlier dumb HTTP server on 8088 is still running. Argo does not use either of them. ufw keeps both off the internet.
 
 `team-a` and `team-b` enforce Pod Security `restricted`. `vuln-demo` is `privileged` and is only the scanner fixture. It is outside the Kyverno namespace match and outside Argo.
 

@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git://65.109.75.15/assignment.git
+    repoURL: https://github.com/techguru515/verda-task.git
     targetRevision: main
     path: bootstrap
     directory:
@@ -27,7 +27,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git://65.109.75.15/assignment.git
+    repoURL: https://github.com/techguru515/verda-task.git
     targetRevision: main
     path: policies/network
   destination:
@@ -46,7 +46,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git://65.109.75.15/assignment.git
+    repoURL: https://github.com/techguru515/verda-task.git
     targetRevision: main
     path: policies/kyverno
   destination:
@@ -65,7 +65,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git://65.109.75.15/assignment.git
+    repoURL: https://github.com/techguru515/verda-task.git
     targetRevision: main
     path: policies/rbac
   destination:
@@ -84,7 +84,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git://65.109.75.15/assignment.git
+    repoURL: https://github.com/techguru515/verda-task.git
     targetRevision: main
     path: apps/team-a
   destination:
@@ -103,7 +103,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git://65.109.75.15/assignment.git
+    repoURL: https://github.com/techguru515/verda-task.git
     targetRevision: main
     path: apps/team-b
   destination:

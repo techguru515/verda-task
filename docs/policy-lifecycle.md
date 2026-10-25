@@ -7,7 +7,7 @@ Kyverno and Cilium policies live in this repository and reach the cluster only t
 3. The image job scans the two pinned images and exits 1 on a fixed critical. `curlimages/curl:8.16.0` is expected to fail that job until it is rebuilt on OpenSSL 3.5.6. The config job exits 1 on a critical misconfiguration outside `tests/vulnerable`.
 4. After the checks, Argo CD applications `kyverno-policies` and `network-policies` sync `main` with prune and self-heal.
 
-GitHub Actions has not executed, because this directory has no GitHub remote. The Kyverno half was run on the control node against the same files.
+Pushes to `main` on https://github.com/techguru515/verda-task.git start the same workflow. The Kyverno half was also run on the control node against these files.
 
 ## Exceptions
 
