@@ -21,13 +21,13 @@ The Kubernetes API, etcd, node SSH, the team-b web service, the dummy team secre
 | Internet to the API | ufw default deny; 6443 is not in the public allow list | `evidence/firewall.txt` |
 | Cross-namespace HTTP | Cilium default-deny | Hubble `Policy denied DROPPED`, curl exit 28 |
 | Egress to 1.1.1.1 | Same default-deny, no world egress allow | Hubble drop to `world` |
-| In-namespace app traffic | Explicit TCP 8080 allow | HTTP 200 from the team-b client |
+| In-namespace app traffic | Explicit TCP 8080 and 8443 allow | HTTP 200 from the team-b client |
 | Cross-team secret read | RBAC Role without secrets | `Forbidden` as `team-a:app-reader` |
 | `:latest`, untagged image, other registry | Kyverno enforce | webhook `validate.kyverno.svc-fail` |
 | Privileged pod | Pod Security `restricted` | API `Forbidden` before the workload exists |
 | Vulnerable image already running | Trivy plus Prometheus | 31 criticals on nginx 1.14.2; alert firing |
 | Bad manifest in git | `kyverno test` in CI | 7/7 on CLI 1.19.2 |
-| Critical CVE in an allowed image | Trivy image job, fail on CRITICAL, ignore unfixed | curl image has a fixed critical; the job is written to fail |
+| Critical CVE in an allowed image | Trivy image job, fail on CRITICAL, ignore unfixed | curl image has a fixed critical; the GitHub job fails at the scan |
 | Caller without a team-b client certificate | nginx `ssl_verify_client on` on port 8443 | HTTP 400 without the certificate, HTTP 200 with it |
 | Unsigned image from the lab registry | Kyverno `verify-signed-images` | `no signatures found` for `curl:unsigned`; signed nginx pod Ready |
 

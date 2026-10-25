@@ -13,7 +13,7 @@ The Git remote is https://github.com/techguru515/verda-task.git. Argo CD tracks 
 | Teams | `team-a` and `team-b`, Pod Security `restricted` |
 | Scanner fixture | `vuln-demo`, Pod Security `privileged`, image `nginx:1.14.2` |
 | GitOps | Argo CD, six Applications, all Synced and Healthy |
-| Admission | Kyverno `disallow-latest-tag`, `restrict-image-registries` |
+| Admission | Kyverno `disallow-latest-tag`, `restrict-image-registries`, `verify-signed-images` |
 | Detection | Trivy Operator, Grafana dashboard `Image vulnerabilities` |
 | Alert | `CriticalVulnerabilityDetected`, firing, `for: 1m` |
 

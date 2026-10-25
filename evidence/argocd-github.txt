@@ -1,0 +1,14 @@
+# 2026-10-25T18:35Z
+# kubectl get applications -n argocd
+# source https://github.com/techguru515/verda-task.git
+
+NAME               REV                                        SYNC     HEALTH
+kyverno-policies   e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741   Synced   Healthy
+namespaces         e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741   Synced   Healthy
+network-policies   e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741   Synced   Healthy
+rbac               e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741   Synced   Healthy
+team-a             e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741   Synced   Healthy
+team-b             e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741   Synced   Healthy
+
+# kubectl get deploy web -n team-b -o jsonpath='{.metadata.labels.assignment\.example/gitops}'
+demonstrated

@@ -6,8 +6,8 @@ What is pinned small on purpose: Kyverno, Argo CD, Prometheus, Alertmanager, and
 
 What has to change before more teams or more nodes:
 
-- Add control-plane members before losing `k8s-control` is an outage. etcd, the API, and the git daemon all sit there.
-- Move GitOps to a remote that is not a daemon on the API node. The current daemon is reachable from the pod CIDR and closed to the internet by ufw.
+- Add control-plane members before losing `k8s-control` is an outage. etcd and the API sit there. An unused git daemon and HTTP server still listen on that node.
+- GitOps already tracks https://github.com/techguru515/verda-task.git. The leftover daemon still listens on the control node, is reachable from the pod CIDR, and is closed to the internet by ufw.
 - Give Kyverno three replicas before relying on it during a node drain. One replica is a single webhook path.
 - Raise Trivy concurrency only with a separate disk for the vulnerability database. The failure was the shared DB lock.
 - Generate ufw peer rules from the node list. A replaced VM gets a new public IP, and the mesh allow is written by hand today.

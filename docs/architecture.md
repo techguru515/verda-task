@@ -14,7 +14,7 @@ Kyverno 1.19.2 enforces an explicit image tag, rejects `:latest`, and allow-list
 
 Each team has a ServiceAccount `app-reader` that can get pods, services, and configmaps in its own namespace. It cannot get secrets. `team-b` holds a dummy Secret `team-credential`.
 
-Cilium default-deny covers `team-a`, `team-b`, and `vuln-demo`. Allows are DNS to CoreDNS, kubelet probes from the host and remote nodes, and in `team-b` only TCP 8080 from `app=client` to `app=web`. There is no cross-namespace allow and no general egress.
+Cilium default-deny covers `team-a`, `team-b`, and `vuln-demo`. Allows are DNS to CoreDNS, kubelet probes from the host and remote nodes, and in `team-b` only TCP 8080 and 8443 from `app=client` to `app=web`. There is no cross-namespace allow and no general egress. `supply-chain` and `image-registry` are outside that default-deny.
 
 Trivy Operator scans `vuln-demo`, `team-a`, and `team-b` one job at a time. The first wave, before that limit, also wrote reports for platform namespaces. kube-prometheus-stack scrapes Trivy, Cilium, and Hubble. The rule `CriticalVulnerabilityDetected` is `sum(trivy_image_vulnerabilities{severity="Critical"}) > 0` for 1 minute. Grafana loads the dashboard ConfigMap labeled `grafana_dashboard=1`.
 
