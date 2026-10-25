@@ -5,16 +5,32 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   policy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Kyverno CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          curl -fsSL -o kyverno.tar.gz https://github.com/kyverno/kyverno/releases/download/v1.19.2/kyverno-cli_v1.19.2_linux_x86_64.tar.gz
+          set -euo pipefail
+          curl -fsSL \
+            -H "Accept: application/octet-stream" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -o kyverno.tar.gz \
+            https://api.github.com/repos/kyverno/kyverno/releases/assets/660820927
+          if ! tar -tzf kyverno.tar.gz >/dev/null; then
+            kind=$(file -b kyverno.tar.gz || true)
+            size=$(wc -c < kyverno.tar.gz || true)
+            echo "::error::Kyverno archive is not a tarball (size=${size}, kind=${kind})"
+            exit 1
+          fi
           tar -xzf kyverno.tar.gz
-          sudo mv kyverno /usr/local/bin/kyverno
+          sudo install -m 0755 kyverno /usr/local/bin/kyverno
       - name: Test admission policies
         run: kyverno test tests/kyverno
 
@@ -34,6 +50,7 @@ jobs:
   images:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         image:
           # Cluster scan: zero critical findings.
