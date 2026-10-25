@@ -7,7 +7,7 @@ Kyverno and Cilium policies live in this repository and reach the cluster only t
 3. The image job scans the two pinned images and exits 1 on a fixed critical. `curlimages/curl:8.16.0` is expected to fail that job until it is rebuilt on OpenSSL 3.5.6. The config job exits 1 on a critical misconfiguration outside `tests/vulnerable`.
 4. After the checks, Argo CD applications `kyverno-policies` and `network-policies` sync `main` with prune and self-heal.
 
-Pushes to `main` on https://github.com/techguru515/verda-task.git start the same workflow. The Kyverno test passed on the control node against these files. The first two GitHub runs failed in job setup: the workflow file had Windows line endings, and `aquasecurity/trivy-action@0.28.0` is not a published tag.
+Pushes to `main` on https://github.com/techguru515/verda-task.git start the same workflow. The policy test passes on GitHub and on the control node. The config scan and the nginx image scan pass. The curl image job fails the critical scan until that image is rebuilt.
 
 ## Exceptions
 
