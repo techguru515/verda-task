@@ -1,0 +1,9 @@
+# 2026-10-25T16:58:57Z to 16:59:13Z
+# cilium pod cilium-fn9bs on k8s-worker-1
+# hubble observe --since 90s --verdict DROPPED --protocol TCP
+# Repeated SYN retries omitted after the first drop of each flow.
+
+Oct 25 16:58:57.076: team-a/client-587485fbf8-llpqz:40802 (ID:29282) <> team-b/web-7cffb889d8-2nvgp:8080 (ID:28888) policy-verdict:none EGRESS DENIED (TCP Flags: SYN)
+Oct 25 16:58:57.076: team-a/client-587485fbf8-llpqz:40802 (ID:29282) <> team-b/web-7cffb889d8-2nvgp:8080 (ID:28888) Policy denied DROPPED (TCP Flags: SYN)
+Oct 25 16:59:06.070: team-a/client-587485fbf8-llpqz:43822 (ID:29282) <> 1.1.1.1:443 (world) policy-verdict:none EGRESS DENIED (TCP Flags: SYN)
+Oct 25 16:59:06.070: team-a/client-587485fbf8-llpqz:43822 (ID:29282) <> 1.1.1.1:443 (world) Policy denied DROPPED (TCP Flags: SYN)

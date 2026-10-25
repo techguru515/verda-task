@@ -1,0 +1,31 @@
+# 2026-10-25T17:14:35Z
+# team-b web listens on 8080 without a client certificate and on 8443 with ssl_verify_client on.
+# Private keys are in /root/mtls on the control node and in Secrets web-tls and client-tls.
+# They are not in git. Argo revision 20420eb.
+
+# kubectl exec -n team-b deploy/client -- curl -sS -D - -o /dev/null http://web.team-b.svc.cluster.local:8080/
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Sun, 25 Oct 2026 17:14:35 GMT
+HTTP_EXIT:0
+
+# With the team-b client certificate:
+# curl --cert /certs/tls.crt --key /certs/tls.key --cacert /certs/ca.crt https://web.team-b.svc.cluster.local:8443/
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Sun, 25 Oct 2026 17:14:37 GMT
+MTLS_EXIT:0
+
+# Same URL, CA only, no client certificate:
+HTTP/1.1 400 Bad Request
+Server: nginx/1.29.8
+Date: Sun, 25 Oct 2026 17:14:55 GMT
+Content-Length: 237
+Connection: close
+http:400
+
+# nginx -T on the web pod includes:
+#   listen 8443 ssl;
+#   ssl_certificate /etc/nginx/tls/tls.crt;
+#   ssl_certificate_key /etc/nginx/tls/tls.key;
+#   ssl_verify_client on;

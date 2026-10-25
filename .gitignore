@@ -1,0 +1,7 @@
+kubeconfig
+*.kubeconfig
+*.pem
+*.key
+credentials
+.env
+evidence/private/

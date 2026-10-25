@@ -1,0 +1,18 @@
+# 2026-10-25T16:57Z
+# kubectl get vulnerabilityreports -n vuln-demo -o wide
+
+NAME                                    REPOSITORY      TAG      SCANNER   AGE   CRITICAL   HIGH   MEDIUM   LOW   UNKNOWN
+replicaset-old-nginx-5787d4b869-nginx   library/nginx   1.14.2   Trivy     17s   31         82     54       42    7
+
+# Allowed workloads scanned in the same pass
+# team-b replicaset-web-7cffb889d8-web        nginxinc/nginx-unprivileged:1.29.8-alpine   critical 0, high 10
+# team-b replicaset-client-587485fbf8-client  curlimages/curl:8.16.0                     critical 2, high 14
+#   CVE-2026-31789 libcrypto3 3.5.2-r0 fixed 3.5.6-r0
+#   CVE-2026-31789 libssl3    3.5.2-r0 fixed 3.5.6-r0
+
+# Operator metric (trivy-operator :8080/metrics)
+# HELP trivy_image_vulnerabilities Number of container image vulnerabilities
+
+# Prometheus query at 2026-10-25T16:58:10Z
+# sum(trivy_image_vulnerabilities{severity="Critical"})
+# result: 35

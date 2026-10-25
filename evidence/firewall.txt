@@ -1,0 +1,19 @@
+# 2026-10-25 control node k8s-control (65.109.75.15)
+# ss -lnt shows the API and git daemon listening on all interfaces.
+# ufw default incoming policy is deny. 6443 and 9345 are not in the allow list.
+
+LISTEN 0      5            0.0.0.0:9418       0.0.0.0:*
+LISTEN 0      5            0.0.0.0:8088       0.0.0.0:*
+LISTEN 0      4096               *:9345             *:*
+LISTEN 0      4096               *:6443             *:*
+
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       31.13.241.15               # admin-ssh
+Anywhere                   ALLOW       65.109.75.15               # cluster-peer
+Anywhere                   ALLOW       65.109.75.39               # cluster-peer
+Anywhere                   ALLOW       135.181.63.166             # cluster-peer
+Anywhere                   ALLOW       10.42.0.0/16               # pod-cidr
+Anywhere                   ALLOW       10.43.0.0/16               # service-cidr

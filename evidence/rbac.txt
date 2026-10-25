@@ -1,0 +1,10 @@
+# 2026-10-25T16:59Z
+
+# kubectl auth can-i get secrets -n team-b --as=system:serviceaccount:team-a:app-reader
+no
+
+# kubectl get secret team-credential -n team-b --as=system:serviceaccount:team-a:app-reader
+Error from server (Forbidden): secrets "team-credential" is forbidden: User "system:serviceaccount:team-a:app-reader" cannot get resource "secrets" in API group "" in the namespace "team-b"
+
+# kubectl auth can-i get pods -n team-a --as=system:serviceaccount:team-a:app-reader
+yes

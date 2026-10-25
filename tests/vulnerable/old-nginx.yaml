@@ -1,0 +1,30 @@
+# Intentionally vulnerable fixture. Not deployed by Argo CD.
+# The namespace is privileged so Pod Security does not block it, and it is
+# outside the Kyverno registry and tag policies. Trivy reports it; admission does not.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: old-nginx
+  namespace: vuln-demo
+  labels:
+    app: old-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: old-nginx
+  template:
+    metadata:
+      labels:
+        app: old-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: docker.io/library/nginx:1.14.2
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http

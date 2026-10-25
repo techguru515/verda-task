@@ -1,0 +1,49 @@
+grafana:
+  service:
+    type: ClusterIP
+  nodeSelector:
+    kubernetes.io/hostname: k8s-worker-2
+prometheus:
+  prometheusSpec:
+    retention: 6h
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        memory: 2Gi
+    nodeSelector:
+      kubernetes.io/hostname: k8s-worker-2
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    podMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+    ruleSelectorNilUsesHelmValues: false
+    ruleSelector: {}
+alertmanager:
+  alertmanagerSpec:
+    replicas: 1
+    nodeSelector:
+      kubernetes.io/hostname: k8s-worker-2
+    resources:
+      requests:
+        cpu: 20m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false

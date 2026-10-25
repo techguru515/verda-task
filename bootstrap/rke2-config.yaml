@@ -1,0 +1,12 @@
+# Applied on k8s-control before rke2-server starts.
+# Worker agents use a separate config with server URL and node token.
+# Do not commit the node token.
+cni: cilium
+secrets-encryption: true
+write-kubeconfig-mode: "0600"
+tls-san:
+  - 65.109.75.15
+  - k8s-control
+node-ip: 65.109.75.15
+advertise-address: 65.109.75.15
+disable-kube-proxy: true

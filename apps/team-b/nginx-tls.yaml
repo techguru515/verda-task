@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-tls-config
+  namespace: team-b
+data:
+  tls.conf: |
+    server {
+      listen 8443 ssl;
+      server_name web.team-b.svc web.team-b.svc.cluster.local;
+      ssl_certificate /etc/nginx/tls/tls.crt;
+      ssl_certificate_key /etc/nginx/tls/tls.key;
+      ssl_client_certificate /etc/nginx/tls/ca.crt;
+      ssl_verify_client on;
+      ssl_protocols TLSv1.2 TLSv1.3;
+      location / {
+        root /usr/share/nginx/html;
+      }
+    }

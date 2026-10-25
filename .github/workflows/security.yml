@@ -1,0 +1,52 @@
+name: security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Kyverno CLI
+        run: |
+          curl -fsSL -o kyverno.tar.gz https://github.com/kyverno/kyverno/releases/download/v1.19.2/kyverno-cli_v1.19.2_linux_x86_64.tar.gz
+          tar -xzf kyverno.tar.gz
+          sudo mv kyverno /usr/local/bin/kyverno
+      - name: Test admission policies
+        run: kyverno test tests/kyverno
+
+  config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy config scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: config
+          scan-ref: .
+          skip-dirs: tests/vulnerable
+          severity: CRITICAL
+          exit-code: "1"
+
+  images:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          # Cluster scan: zero critical findings.
+          - nginxinc/nginx-unprivileged:1.29.8-alpine
+          # Cluster scan: CVE-2026-31789 in OpenSSL 3.5.2, fixed in 3.5.6.
+          # This job fails until the image is rebuilt. See docs/cve-triage.md.
+          - curlimages/curl:8.16.0
+    steps:
+      - name: Trivy image scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: image
+          image-ref: ${{ matrix.image }}
+          severity: CRITICAL
+          exit-code: "1"
+          ignore-unfixed: true

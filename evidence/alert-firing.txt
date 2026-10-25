@@ -1,0 +1,16 @@
+# 2026-10-25T16:58Z
+# curl http://10.43.127.27:9090/api/v1/rules
+# Prometheus service: monitoring-kube-prometheus-prometheus
+
+alert: CriticalVulnerabilityDetected
+state: firing
+health: ok
+query: sum(trivy_image_vulnerabilities{severity="Critical"}) > 0
+duration: 60
+activeAt: 2026-10-25T16:53:02.388019499Z
+value: 35
+
+# Scrape targets up at the same time:
+# monitoring/cilium-agent (prometheus and hubble-metrics)
+# hubble-relay-metrics
+# trivy-operator

@@ -1,0 +1,13 @@
+RKE2 v1.36.5+rke2r1
+containerd 2.3.4-k3s1
+kernel 6.8.0-147-generic
+Ubuntu 24.04.5 LTS
+Cilium 1.20.2
+Kyverno chart 3.9.2 / app v1.19.2 / CLI v1.19.2
+Argo CD chart 10.11.1 / app v3.5.6
+Trivy Operator chart 0.37.0
+kube-prometheus-stack 92.13.1
+Grafana 13.2.4
+nginxinc/nginx-unprivileged 1.29.8-alpine
+curlimages/curl 8.16.0
+scanner fixture docker.io/library/nginx 1.14.2

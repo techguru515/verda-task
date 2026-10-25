@@ -1,0 +1,14 @@
+# 2026-10-25, Kyverno CLI 1.19.2 on the control node
+# kyverno test tests/kyverno
+# KYVERNO_TEST_EXIT:0
+# RESULT Pass means the expected outcome matched, including expected failures.
+
+Test Summary: 7 tests passed and 0 tests failed
+
+1  disallow-latest-tag       require-image-tag   v1/Pod/team-a/bad-latest   Pass
+2  disallow-latest-tag       reject-latest-tag   v1/Pod/team-a/bad-latest   Pass
+3  disallow-latest-tag       require-image-tag   v1/Pod/team-a/omitted-tag  Pass
+4  restrict-image-registries validate-registries v1/Pod/team-a/bad-registry Pass
+5  disallow-latest-tag       reject-latest-tag   v1/Pod/team-b/good-web     Pass
+6  restrict-image-registries validate-registries v1/Pod/team-b/good-web     Pass
+7  restrict-image-registries validate-registries v1/Pod/team-a/bad-latest   Pass

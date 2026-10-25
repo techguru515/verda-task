@@ -1,0 +1,18 @@
+# Installed as aqua/trivy-operator chart 0.37.0.
+# Application namespaces only. A full-cluster parallel scan exhausted the
+# shared Trivy DB lock on these 16 GB nodes.
+targetNamespaces: "vuln-demo,team-a,team-b"
+serviceMonitor:
+  enabled: true
+trivy:
+  ignoreUnfixed: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+operator:
+  replicas: 1
+  scanJobsConcurrentLimit: 1

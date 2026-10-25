@@ -1,0 +1,16 @@
+# 2026-10-25T16:59Z
+# kubectl get applications -n argocd
+
+NAME               SYNC STATUS   HEALTH STATUS
+kyverno-policies   Synced        Healthy
+namespaces         Synced        Healthy
+network-policies   Synced        Healthy
+rbac               Synced        Healthy
+team-a             Synced        Healthy
+team-b             Synced        Healthy
+
+# team-b revision: b989c57d4369df2ab0ed1f59318d20b5f7e57ff1
+# kubectl get deploy web -n team-b -o jsonpath='{.metadata.labels.assignment\.example/gitops}'
+demonstrated
+
+# Source: git://65.109.75.15/assignment.git

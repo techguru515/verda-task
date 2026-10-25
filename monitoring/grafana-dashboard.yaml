@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trivy-vulnerabilities
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  trivy-vulnerabilities.json: |
+    {
+      "title": "Image vulnerabilities",
+      "uid": "trivy-image-vulns",
+      "schemaVersion": 39,
+      "version": 1,
+      "timezone": "utc",
+      "refresh": "30s",
+      "time": { "from": "now-1h", "to": "now" },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Critical vulnerabilities",
+          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"Critical\"})"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Vulnerabilities by severity",
+          "gridPos": { "h": 8, "w": 16, "x": 8, "y": 0 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (severity) (trivy_image_vulnerabilities)",
+              "legendFormat": "{{severity}}"
+            }
+          ]
+        }
+      ]
+    }

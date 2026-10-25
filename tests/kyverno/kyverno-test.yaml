@@ -1,0 +1,52 @@
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: admission
+policies:
+  - ../../policies/kyverno/disallow-latest.yaml
+  - ../../policies/kyverno/restrict-image-registries.yaml
+resources:
+  - resources/pods.yaml
+results:
+  - policy: disallow-latest-tag
+    rule: require-image-tag
+    kind: Pod
+    resources:
+      - bad-latest
+    result: pass
+  - policy: disallow-latest-tag
+    rule: reject-latest-tag
+    kind: Pod
+    resources:
+      - bad-latest
+    result: fail
+  - policy: disallow-latest-tag
+    rule: require-image-tag
+    kind: Pod
+    resources:
+      - omitted-tag
+    result: fail
+  - policy: restrict-image-registries
+    rule: validate-registries
+    kind: Pod
+    resources:
+      - bad-registry
+    result: fail
+  - policy: disallow-latest-tag
+    rule: reject-latest-tag
+    kind: Pod
+    resources:
+      - good-web
+    result: pass
+  - policy: restrict-image-registries
+    rule: validate-registries
+    kind: Pod
+    resources:
+      - good-web
+    result: pass
+  - policy: restrict-image-registries
+    rule: validate-registries
+    kind: Pod
+    resources:
+      - bad-latest
+    result: pass

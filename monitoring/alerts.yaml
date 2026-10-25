@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: security-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: security.rules
+      rules:
+        - alert: CriticalVulnerabilityDetected
+          expr: sum(trivy_image_vulnerabilities{severity="Critical"}) > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "A running image has at least one critical vulnerability"
+            description: "Trivy Operator is reporting critical vulnerabilities. Scanning detects the risk; admission and CI are what stop a new vulnerable image."

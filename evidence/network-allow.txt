@@ -1,0 +1,14 @@
+# 2026-10-25T16:58:55Z
+# kubectl exec -n team-b deploy/client -- curl -sS -m 12 -D - -o /dev/null http://web.team-b.svc.cluster.local:8080
+
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Sun, 25 Oct 2026 16:58:55 GMT
+Content-Type: text/html
+Content-Length: 896
+Last-Modified: Tue, 07 Apr 2026 12:09:53 GMT
+Connection: keep-alive
+ETag: "69d4f411-380"
+Accept-Ranges: bytes
+
+ALLOW_EXIT:0

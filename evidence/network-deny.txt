@@ -1,0 +1,16 @@
+# 2026-10-25T16:59Z
+# Cross-namespace: team-a client -> team-b web
+# kubectl exec -n team-a deploy/client -- curl -sS -m 8 -o /dev/null -w "http:%{http_code}\n" http://web.team-b.svc.cluster.local:8080
+
+http:000
+curl: (28) Connection timed out after 8002 milliseconds
+command terminated with exit code 28
+CROSS_EXIT:28
+
+# External egress: team-a client -> https://1.1.1.1/
+# kubectl exec -n team-a deploy/client -- curl -sS -m 8 -o /dev/null -w "http:%{http_code}\n" https://1.1.1.1/
+
+curl: (28) Connection timed out after 8002 milliseconds
+http:000
+command terminated with exit code 28
+EGRESS_EXIT:28
