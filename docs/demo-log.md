@@ -38,7 +38,7 @@ Grafana `GET /api/health` returned version 13.2.4 and `database: ok`. Dashboard 
 
 ## GitOps
 
-All six Applications were Synced and Healthy. `team-b` is at `b989c57d4369df2ab0ed1f59318d20b5f7e57ff1`. Deployment `web` label `assignment.example/gitops` is `demonstrated`.
+All six Applications were Synced and Healthy against the control-node git daemon at `b989c57d4369df2ab0ed1f59318d20b5f7e57ff1`. That daemon is no longer the source. Argo CD now tracks https://github.com/techguru515/verda-task.git on `main`, and the same six Applications were Synced and Healthy there. Deployment `web` label `assignment.example/gitops` is `demonstrated`.
 
 ## mTLS
 
