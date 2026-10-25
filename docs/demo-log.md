@@ -38,7 +38,7 @@ Grafana `GET /api/health` returned version 13.2.4 and `database: ok`. Dashboard 
 
 ## GitOps
 
-`evidence/argocd.txt` is the 16:59Z capture against the control-node git daemon at `b989c57d4369df2ab0ed1f59318d20b5f7e57ff1`. That daemon is no longer the source. Argo CD tracks https://github.com/techguru515/verda-task.git on `main`. At 18:35Z all six Applications were Synced and Healthy at `e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741` (`evidence/argocd-github.txt`). Deployment `web` label `assignment.example/gitops` is `demonstrated`.
+`evidence/argocd.txt` is the 16:59Z capture against the control-node git daemon at `b989c57d4369df2ab0ed1f59318d20b5f7e57ff1`. That daemon is no longer the source. Argo CD tracks https://github.com/techguru515/verda-task.git on `main`. At 18:35Z all six Applications were Synced and Healthy at `e55ef92a74dddedcb6bd16e1b3ed5de1c8d19741` (`evidence/argocd-github.txt`). A later check the same evening showed the same six Synced and Healthy at `6f1afd2`. Argo tracks the whole `main` commit, so a docs-only push moves that revision again. Deployment `web` label `assignment.example/gitops` is `demonstrated`.
 
 ## mTLS
 

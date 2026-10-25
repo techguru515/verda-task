@@ -2,7 +2,7 @@
 
 Three Ubuntu 24.04 VMs in Verda location FIN-01, plan `CPU.4V.16G`, legacy public networking. The public address is on `eth0`. There is no metadata service and the CLI could not attach a private subnet, so the host firewall is the network boundary.
 
-RKE2 v1.36.5+rke2r1 runs on all three. `k8s-control` is control-plane and etcd. Workers take the workloads. Secrets encryption is on. kube-proxy is disabled; Cilium 1.20.2 runs with `kubeProxyReplacement` and Hubble. Pod CIDR `10.42.0.0/16`, service CIDR `10.43.0.0/16`. No kube-proxy pods are left.
+RKE2 v1.36.5+rke2r1 runs on all three. `k8s-control` is control-plane and etcd. It carries no taint, so team-b web, the Kyverno admission controller, and the Trivy operator run there along with workloads on the workers. Secrets encryption is on. Cilium 1.20.2 runs with `kubeProxyReplacement` and Hubble. Pod CIDR `10.42.0.0/16`, service CIDR `10.43.0.0/16`. The control node and worker-1 have no kube-proxy pod. `kube-proxy-k8s-worker-2` is still running from `rancher/hardened-kubernetes:v1.36.5-rke2r1`.
 
 ufw default-deny incoming. SSH is limited to the admin address. Node-to-node traffic and the pod and service CIDRs are allowed so the API, etcd, and VXLAN work. Kubernetes ports listen on the host and are absent from the public allow list.
 

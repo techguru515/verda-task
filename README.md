@@ -9,7 +9,7 @@ The Git remote is https://github.com/techguru515/verda-task.git. Argo CD tracks 
 | Piece | Where |
 | --- | --- |
 | Nodes | `k8s-control` 65.109.75.15, `k8s-worker-1` 65.109.75.39, `k8s-worker-2` 135.181.63.166 |
-| Kubernetes | RKE2 v1.36.5+rke2r1, Cilium 1.20.2 with kube-proxy replacement and Hubble |
+| Kubernetes | RKE2 v1.36.5+rke2r1, Cilium 1.20.2 with kube-proxy replacement and Hubble. One kube-proxy pod remains on `k8s-worker-2`. |
 | Teams | `team-a` and `team-b`, Pod Security `restricted` |
 | Scanner fixture | `vuln-demo`, Pod Security `privileged`, image `nginx:1.14.2` |
 | GitOps | Argo CD, six Applications, all Synced and Healthy |

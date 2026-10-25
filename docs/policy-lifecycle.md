@@ -5,7 +5,7 @@ Kyverno and Cilium policies live in this repository and reach the cluster only t
 1. A change lands in `policies/kyverno` or `policies/network`.
 2. `.github/workflows/security.yml` runs `kyverno test tests/kyverno` with CLI 1.19.2, the same version as the cluster. That job passed on the control node: 7 tests, 0 failures (`evidence/kyverno-cli.txt`).
 3. The image job scans the two pinned images and exits 1 on a fixed critical. `curlimages/curl:8.16.0` is expected to fail that job until it is rebuilt on OpenSSL 3.5.6. The config job exits 1 on a critical misconfiguration outside `tests/vulnerable`.
-4. After the checks, Argo CD applications `kyverno-policies` and `network-policies` sync `main` with prune and self-heal.
+4. Argo CD applications `kyverno-policies` and `network-policies` sync `main` on their own interval, with prune and self-heal. A red workflow leaves those Applications Synced.
 
 Pushes to `main` on https://github.com/techguru515/verda-task.git start the same workflow. The policy test passes on GitHub and on the control node. The config scan and the nginx image scan pass. The curl image job fails the critical scan until that image is rebuilt.
 

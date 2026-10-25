@@ -13,7 +13,7 @@ What has to change before more teams or more nodes:
 - Generate ufw peer rules from the node list. A replaced VM gets a new public IP, and the mesh allow is written by hand today.
 - Private node addresses would remove the public IP from etcd and the API. Verda’s CLI could not attach a private subnet on this account, so the guest firewall is the boundary.
 
-Cilium is already in kube-proxy replacement mode, which is the shape you keep when the node count grows. Hubble metrics are scraped. The alert expression is a cluster-wide sum, so one noisy namespace pages everyone. Split it by namespace before a second team owns the pager.
+Cilium is already in kube-proxy replacement mode, which is the shape you keep when the node count grows. This lab still runs `kube-proxy` on `k8s-worker-2`. The control node and worker-1 do not. Hubble metrics are scraped. The alert expression is a cluster-wide sum, so one noisy namespace pages everyone. Split it by namespace before a second team owns the pager.
 
 ## At 10 clusters and 500 nodes
 
