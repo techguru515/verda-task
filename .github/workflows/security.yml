@@ -17,22 +17,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set +e
-          curl -q -fsSL -H "Accept: application/octet-stream" -H "Authorization: Bearer ${GH_TOKEN}" -o kyverno.tar.gz https://api.github.com/repos/kyverno/kyverno/releases/assets/660820927
-          ccode=$?
-          size=$(wc -c < kyverno.tar.gz 2>/dev/null)
-          if [ "$ccode" -ne 0 ]; then
-            echo "::error::curl exit ${ccode} size ${size}"
-            exit 1
-          fi
-          tar_err=$(tar -xzf kyverno.tar.gz 2>&1)
-          tcode=$?
-          if [ "$tcode" -ne 0 ]; then
-            msg=$(printf '%s' "$tar_err" | tr '\n' ' ')
-            echo "::error::tar exit ${tcode} size ${size} ${msg}"
-            exit 1
-          fi
-          sudo install -m 0755 kyverno /usr/local/bin/kyverno
+          set -euo pipefail
+          curl -q -fsSL -H "Accept: application/octet-stream" -H "Authorization: Bearer ${GH_TOKEN}" -o /tmp/kyverno.tar.gz https://api.github.com/repos/kyverno/kyverno/releases/assets/660820927
+          mkdir -p /tmp/kyverno-cli
+          tar -C /tmp/kyverno-cli -xzf /tmp/kyverno.tar.gz
+          sudo install -m 0755 /tmp/kyverno-cli/kyverno /usr/local/bin/kyverno
       - name: Test admission policies
         run: kyverno test tests/kyverno
 
