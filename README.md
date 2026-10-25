@@ -37,9 +37,9 @@ Versions are in `VERSIONS`. Command transcripts are in `evidence/`.
 
 `docs/access.md`. Dashboards stay on ClusterIP. Use an SSH tunnel. The API port is listening on the host and is not in the public ufw allow list (`evidence/firewall.txt`).
 
-## Still open
+## Limits
 
-team-b web requires a client certificate on port 8443. Cilium's own mutual-auth feature is left off because GHSA-33qq-jq9c-6gcc is a bypass in that beta. Images pulled from the lab registry on port 30500 must be signed with the cosign key in `/root/cosign`; the private key is not in git. The public key is in `policies/kyverno/verify-signed-images.yaml`. The control plane is a single node. `ClusterPolicy` is deprecated in Kyverno 1.19 and still enforces. GitOps tracks https://github.com/techguru515/verda-task.git. The old git daemon on the control node is still installed and is no longer the Argo source. Scanning reports vulnerabilities and does not block them. The curl image job in CI fails the critical scan; triage is in `docs/cve-triage.md`. The nginx image job passes. Policy rollout is described in `docs/policy-lifecycle.md`.
+team-b web requires a client certificate on port 8443. The same pod still serves cleartext on port 8080. Cilium mutual authentication is off because GHSA-33qq-jq9c-6gcc is a bypass in that beta. Kyverno requires a cosign signature for `65.109.75.15:30500/*` only when the pod is created in `supply-chain`. The private key stays in `/root/cosign` and is not in git. The public key is in `policies/kyverno/verify-signed-images.yaml`. Images in `team-a` and `team-b` are checked by registry and tag. The control plane is a single node. `ClusterPolicy` is deprecated in Kyverno 1.19 and still enforces. Argo CD reads https://github.com/techguru515/verda-task.git. The old git daemon is still installed on the control node. Trivy reports vulnerabilities and leaves the pod running. The curl image job fails the critical scan; triage is in `docs/cve-triage.md`. The nginx image job passes. Policy rollout is described in `docs/policy-lifecycle.md`.
 
 ## Cost
 
